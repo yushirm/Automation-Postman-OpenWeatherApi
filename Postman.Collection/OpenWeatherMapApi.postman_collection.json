@@ -654,8 +654,8 @@
 													"    pm.response.to.have.status(400);\r",
 													"});\r",
 													"\r",
-													"pm.test(\"Body contains syntax error\", function () {\r",
-													"    pm.expect(pm.response.text()).to.include(\"syntax error\");\r",
+													"pm.test(\"Body contains 'unmarshal type error: expected=float64, got=string'\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"unmarshal type error: expected=float64, got=string\");\r",
 													"});"
 												],
 												"type": "text/javascript"
@@ -704,8 +704,8 @@
 													"    pm.response.to.have.status(400);\r",
 													"});\r",
 													"\r",
-													"pm.test(\"Body contains syntax error\", function () {\r",
-													"    pm.expect(pm.response.text()).to.include(\"syntax error\");\r",
+													"pm.test(\"Body contains 'unmarshal type error: expected=float64, got=string'\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"unmarshal type error: expected=float64, got=string\");\r",
 													"});"
 												],
 												"type": "text/javascript"
