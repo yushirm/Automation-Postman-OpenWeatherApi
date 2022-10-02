@@ -1,0 +1,776 @@
+{
+	"info": {
+		"_postman_id": "a38adbf6-7d4f-4f1f-8cd5-70926b0067a9",
+		"name": "OpenWeatherMapApi",
+		"description": "Open Weather Map Api\n\nThis collection contains tests for the site:\nhttp://api.openweathermap.org/data/3.0/",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Stations Tests",
+			"item": [
+				{
+					"name": "Positive Test Cases",
+					"item": [
+						{
+							"name": "Positive 1 - Register a Weather Station",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json();\r",
+											"pm.environment.set(\"station_id\", responseData.ID);\r",
+											"pm.environment.set(\"initial_station_name\", responseData.name);\r",
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body contains updated_at\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"updated_at\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"external_id\": \"{{external_id}}\",\r\n    \"name\": \"{{station_name}} Test Station\",\r\n    \"latitude\": {{latitude}},\r\n    \"longitude\": {{longitude}},\r\n    \"altitude\": {{altitude}}\r\n}"
+								},
+								"url": {
+									"raw": "{{url}}/stations?appid={{APIKey}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"stations"
+									],
+									"query": [
+										{
+											"key": "appid",
+											"value": "{{APIKey}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Positive 2 - Get Weather Station Info",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/stations/{{station_id}}?appid={{APIKey}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"stations",
+										"{{station_id}}"
+									],
+									"query": [
+										{
+											"key": "appid",
+											"value": "{{APIKey}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Positive 3 - Update a Weather Station",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json();\r",
+											"pm.environment.set(\"updated_station_name\", responseData.name);\r",
+											"\r",
+											"let initial_station_name = pm.environment.get(\"initial_station_name\");\r",
+											"let updated_station_name = pm.environment.get(\"updated_station_name\");\r",
+											"\r",
+											"pm.test(\"Station name was changed\", function () {\r",
+											"    pm.expect(updated_station_name).to.not.eql(initial_station_name);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"external_id\": \"{{external_id}}\",\r\n    \"name\": \"{{station_name}} Test Station\",\r\n    \"latitude\": {{latitude}},\r\n    \"longitude\": {{longitude}},\r\n    \"altitude\": {{altitude}}\r\n}"
+								},
+								"url": {
+									"raw": "{{url}}/stations/{{station_id}}?appid={{APIKey}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"stations",
+										"{{station_id}}"
+									],
+									"query": [
+										{
+											"key": "appid",
+											"value": "{{APIKey}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Positive 4 - Delete a Weather Station",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body is empty\", function () {\r",
+											"    pm.response.to.have.body(\"\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/stations/{{station_id}}?appid={{APIKey}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"stations",
+										"{{station_id}}"
+									],
+									"query": [
+										{
+											"key": "appid",
+											"value": "{{APIKey}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Positive 5 - Confirm Station is Deleted",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body contains Station not found\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Station not found\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/stations/{{station_id}}?appid={{APIKey}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"stations",
+										"{{station_id}}"
+									],
+									"query": [
+										{
+											"key": "appid",
+											"value": "{{APIKey}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Positive Test Cases\n\nThis flow targets expected user behaviour when:\n\n1. Registering a new Weather Station\n2. Getting the info of that station\n3. Making an update to that Station\n4. Deleting the Station"
+				},
+				{
+					"name": "Negative Test Cases",
+					"item": [
+						{
+							"name": "No Auth",
+							"item": [
+								{
+									"name": "Negative - No Auth - 1 - Register a Weather Station",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body contains Invalid API key\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Invalid API key\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"external_id\": \"{{external_id}}\",\r\n    \"name\": \"{{station_name}} Test Station\",\r\n    \"latitude\": {{latitude}},\r\n    \"longitude\": {{longitude}},\r\n    \"altitude\": {{altitude}}\r\n}"
+										},
+										"url": {
+											"raw": "{{url}}/stations",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"stations"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative - No Auth - 2 - Get Weather Station Info",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body contains Invalid API key\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Invalid API key\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"url": {
+											"raw": "{{url}}/stations/{{station_id}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"stations",
+												"{{station_id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative - No Auth - 3 - Update a Weather Station",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body contains Invalid API key\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Invalid API key\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"external_id\": \"{{external_id}}\",\r\n    \"name\": \"{{station_name}} Test Station\",\r\n    \"latitude\": {{latitude}},\r\n    \"longitude\": {{longitude}},\r\n    \"altitude\": {{altitude}}\r\n}"
+										},
+										"url": {
+											"raw": "{{url}}/stations/{{station_id}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"stations",
+												"{{station_id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative - No Auth - 4 - Delete a Weather Station",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body contains Invalid API key\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Invalid API key\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"url": {
+											"raw": "{{url}}/stations/{{station_id}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"stations",
+												"{{station_id}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"description": "No Auth Negative Cases\n\nThis folder tests if requests correctly handle not being passed the required API Key"
+						},
+						{
+							"name": "Incorrect Auth",
+							"item": [
+								{
+									"name": "Negative - Incorrect Auth - 1 - Register a Weather Station",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body contains Invalid API key\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Invalid API key\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"external_id\": \"{{external_id}}\",\r\n    \"name\": \"{{station_name}} Test Station\",\r\n    \"latitude\": {{latitude}},\r\n    \"longitude\": {{longitude}},\r\n    \"altitude\": {{altitude}}\r\n}"
+										},
+										"url": {
+											"raw": "{{url}}/stations?appid={{APIKey_invalid}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"stations"
+											],
+											"query": [
+												{
+													"key": "appid",
+													"value": "{{APIKey_invalid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative - Incorrect Auth - 2 - Get Weather Station Info",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body contains Invalid API key\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Invalid API key\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"url": {
+											"raw": "{{url}}/stations/{{station_id}}?appid={{APIKey_invalid}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"stations",
+												"{{station_id}}"
+											],
+											"query": [
+												{
+													"key": "appid",
+													"value": "{{APIKey_invalid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative - Incorrect Auth - 3 - Update a Weather Station",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body contains Invalid API key\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Invalid API key\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"external_id\": \"{{external_id}}\",\r\n    \"name\": \"{{station_name}} Test Station\",\r\n    \"latitude\": {{latitude}},\r\n    \"longitude\": {{longitude}},\r\n    \"altitude\": {{altitude}}\r\n}"
+										},
+										"url": {
+											"raw": "{{url}}/stations/{{station_id}}?appid={{APIKey_invalid}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"stations",
+												"{{station_id}}"
+											],
+											"query": [
+												{
+													"key": "appid",
+													"value": "{{APIKey_invalid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative - Incorrect Auth - 4 - Delete a Weather Station",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body contains Invalid API key\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Invalid API key\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"url": {
+											"raw": "{{url}}/stations/{{station_id}}?appid={{APIKey_invalid}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"stations",
+												"{{station_id}}"
+											],
+											"query": [
+												{
+													"key": "appid",
+													"value": "{{APIKey_invalid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"description": "Incorrect Auth Negative Cases\n\nThis folder tests if requests correctly handle incorrect auth details being supplied"
+						},
+						{
+							"name": "Incorrect Data Types",
+							"item": [
+								{
+									"name": "Negative  - Incorrect Data Type - 1 - Register a Weather Station Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body contains syntax error\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"syntax error\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"external_id\": \"{{external_id}}\",\r\n    \"name\": \"{{station_name}} Test Station\",\r\n    \"latitude\": {{random_string}},\r\n    \"longitude\": {{longitude}},\r\n    \"altitude\": {{altitude}}\r\n}"
+										},
+										"url": {
+											"raw": "{{url}}/stations?appid={{APIKey}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"stations"
+											],
+											"query": [
+												{
+													"key": "appid",
+													"value": "{{APIKey}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative  - Incorrect Data Type - 2 - Update a Weather Station Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body contains syntax error\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"syntax error\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"external_id\": \"{{external_id}}\",\r\n    \"name\": \"{{station_name}} Test Station\",\r\n    \"latitude\": {{random_string}},\r\n    \"longitude\": {{longitude}},\r\n    \"altitude\": {{altitude}}\r\n}"
+										},
+										"url": {
+											"raw": "{{url}}/stations/{{station_id}}?appid={{APIKey}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"stations",
+												"{{station_id}}"
+											],
+											"query": [
+												{
+													"key": "appid",
+													"value": "{{APIKey}}"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					],
+					"description": "Negative Tests Cases\n\nThis flow assesses how the endpoint handles unexpected behaviour"
+				}
+			],
+			"description": "Stations Endpoint Tests\n\nThis folder contains test cases for:\nhttp://api.openweathermap.org/data/3.0/stations",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.get(\"APIKey\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
