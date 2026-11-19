@@ -7,9 +7,9 @@
 
 <div align="center">
 
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/yushirm/Automation-Selenium-SauceDemo.svg)](https://github.com/yushirm/Automation-Selenium-SauceDemo/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/yushirm/Automation-Selenium-SauceDemo.svg)](https://github.com/yushirm/Automation-Selenium-SauceDemo/pulls)
+[![Last checked](https://img.shields.io/badge/last%20checked-Nov%202026-informational.svg)]()
+[![GitHub Issues](https://img.shields.io/github/issues/yushirm/Automation-Postman-OpenWeatherApi.svg)](https://github.com/yushirm/Automation-Postman-OpenWeatherApi/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/yushirm/Automation-Postman-OpenWeatherApi.svg)](https://github.com/yushirm/Automation-Postman-OpenWeatherApi/pulls)
 
 </div>
 
@@ -24,7 +24,6 @@ A test automation project using the Postman that targets [Open Weather Map Api](
 - [Getting Started](#getting_started)
 - [Usage](#usage)
 - [Tools Used](#built_using)
-- [TODO](./TODO.md)
 - [Authors](#authors)
 
 ## 🧐 About <a name = "about"></a>
@@ -34,7 +33,7 @@ The purpose of this project is to show how I would create and manage a Postman T
 ### Test Design Approach <a name = "test_design"></a>
 Tests were created to emulate both positive and negative interactions against the Api. Positive interactions simulate typical Api use, such as the Addition, Modification, Retrieval and Deletion of data. Negative interactions simulate non-standard use, such as omission of data, incorrect data types and incorrect authorizations. 
 
-The initial tests target [Weather Stations](https://openweathermap.org/stations) functionality, and go through the motions of creating, modifying and removing a station. The tests also evaluate how gracefully this endpoint handles unexpected data (e.g. trying to modify a station without proper authorization).
+The initial tests target [Weather Stations](https://openweathermap.org/stations) functionality, and go through the motions of creating, modifying and removing a station. Run them against a throwaway station on your own account. The tests also evaluate how gracefully this endpoint handles unexpected data (e.g. trying to modify a station without proper authorization).
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 This section outlines what you will need to run the tests locally.
@@ -75,7 +74,7 @@ You can download Postman from [Here](https://www.postman.com/download/).
 
 <b>Generating and Updating Open Weather Map API Key</b>
 
-Open Weather Map requires that users register before making changes via the API. Users receive an API Key when registering that allows API access. You can register and obtain a key [here](https://openweathermap.org/appid#signup).
+**You need your own API key.** The repository's environment file ships with the key field empty, and the Weather Stations requests won't authenticate until you add one. Open Weather Map requires that users register before making changes via the API. Users receive an API Key when registering that allows API access. You can register and obtain a key [here](https://openweathermap.org/appid#signup).
 
 - You will need to update the Postman Environment with your generated key.
 - Click on the <b>Environment Icon</b> and then on <b>Edit</b>
